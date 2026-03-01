@@ -1,9 +1,11 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
+import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
 import RequireAuth from "./RequireAuth";
+import EmployeesPage from "../pages/admin/EmployeesPage";
 
 // ─── App Routes ──────────────────────────────────────────────────────────────
 
@@ -15,15 +17,17 @@ const AppRoutes = () => {
 
             {/* ── Admin (protected) ───────────────────────────────────────── */}
             <Route
-                path="/admin/*"
+                path="/admin"
                 element={
                     <RequireAuth allowedRoles={["admin"]}>
-                        <Routes>
-                            <Route path="dashboard" element={<AdminDashboard />} />
-                        </Routes>
+                        <AdminLayout />
                     </RequireAuth>
                 }
-            />
+            >
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="employees" element={<EmployeesPage />} />
+                <Route path="seats" element={<div>Seats — coming soon</div>} />
+            </Route>
 
             {/* ── Employee (protected) ────────────────────────────────────── */}
             <Route
