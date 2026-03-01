@@ -6,6 +6,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
 import RequireAuth from "./RequireAuth";
 import EmployeesPage from "../pages/admin/EmployeesPage";
+import SeatsPage from "../pages/admin/SeatsPage";
 
 // ─── App Routes ──────────────────────────────────────────────────────────────
 
@@ -26,7 +27,7 @@ const AppRoutes = () => {
             >
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="employees" element={<EmployeesPage />} />
-                <Route path="seats" element={<div>Seats — coming soon</div>} />
+                <Route path="seats" element={<SeatsPage />} />
             </Route>
 
             {/* ── Employee (protected) ────────────────────────────────────── */}
