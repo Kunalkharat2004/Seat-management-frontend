@@ -11,13 +11,13 @@ import {
     ListItemText,
     Toolbar,
     Typography,
-    Divider,
     useMediaQuery,
     useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import EventSeatIcon from "@mui/icons-material/EventSeat";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
@@ -29,8 +29,9 @@ import { useLogout } from "../hooks/useAuth";
 const DRAWER_WIDTH = 260;
 
 const NAV_ITEMS = [
-    { label: "Dashboard", icon: <DashboardIcon />, path: "/employee/dashboard" },
-    { label: "My Bookings", icon: <BookOnlineIcon />, path: "/employee/bookings" },
+    { label: "Dashboard",   icon: <DashboardIcon />,  path: "/employee/dashboard" },
+    { label: "Book a Seat", icon: <EventSeatIcon />,   path: "/employee/book-seat" },
+    { label: "My Bookings", icon: <BookOnlineIcon />,  path: "/employee/bookings"  },
 ] as const;
 
 // ─── Component ───────────────────────────────────────────────────────────────

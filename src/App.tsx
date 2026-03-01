@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import AppRoutes from "./routes/AppRoutes";
 import { useAuthStore } from "./store/auth.store";
@@ -46,9 +48,11 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </LocalizationProvider>
   );
 };
 

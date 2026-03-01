@@ -6,6 +6,7 @@ import EmployeeLayout from "../layouts/EmployeeLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
 import MyBookings from "../pages/employee/MyBookings";
+import BookSeatPage from "../pages/employee/BookSeatPage";
 import RequireAuth from "./RequireAuth";
 import EmployeesPage from "../pages/admin/EmployeesPage";
 import SeatsPage from "../pages/admin/SeatsPage";
@@ -43,6 +44,7 @@ const AppRoutes = () => {
             >
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<EmployeeDashboard />} />
+                <Route path="book-seat" element={<BookSeatPage />} />
                 <Route path="bookings" element={<MyBookings />} />
             </Route>
 
