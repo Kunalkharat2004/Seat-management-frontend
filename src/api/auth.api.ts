@@ -19,6 +19,7 @@ export interface SetPasswordPayload {
 }
 
 export interface CurrentUserResponse {
+    id: string;
     employee_id: string;
     name: string;
     email: string;

@@ -8,6 +8,7 @@ const TOKEN_KEY = "access_token";
 
 export interface User {
     id: string;
+    employee_id: string;
     name: string;
     email: string;
     role: string;

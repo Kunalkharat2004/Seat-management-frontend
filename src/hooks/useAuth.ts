@@ -62,7 +62,8 @@ export const useLoginMutation = () => {
         onSuccess: ({ loginRes, profile }) => {
             // 4. Persist token + user in Zustand store
             storeLogin(loginRes.access_token, {
-                id: profile.employee_id,
+                id: profile.id,
+                employee_id: profile.employee_id,
                 name: profile.name,
                 email: profile.email,
                 role: profile.role,

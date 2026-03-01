@@ -20,7 +20,8 @@ const App = () => {
 
     if (isSuccess && profile) {
       setUser({
-        id: profile.employee_id,
+        id: profile.id,
+        employee_id: profile.employee_id,
         name: profile.name,
         email: profile.email,
         role: profile.role,
