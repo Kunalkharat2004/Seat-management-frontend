@@ -66,9 +66,7 @@ const EmployeeLayout = () => {
                 sx={{
                     gap: 1.5,
                     borderBottom: 1,
-                    borderColor: "divider",
-                    bgcolor: "primary.main",
-                    color: "primary.contrastText",
+                    borderColor: "divider"
                 }}
             >
                 <BookOnlineIcon sx={{ fontSize: 28 }} />

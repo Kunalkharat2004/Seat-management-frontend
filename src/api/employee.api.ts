@@ -27,6 +27,23 @@ export interface CreateBookingPayload {
     booking_date: string;
 }
 
+export interface MyBooking {
+    id: string;
+    seat_id: string;
+    seat_number: string;
+    booking_date: string;
+    status: 'confirmed' | 'checked_in' | 'expired' | 'cancelled';
+    check_in_time: string | null;
+    created_at: string;
+}
+
+export interface PaginatedMyBookings {
+    items: MyBooking[];
+    total: number;
+    page: number;
+    page_size: number;
+}
+
 // ─── API Functions ───────────────────────────────────────────────────────────
 
 // -----------------------------------
@@ -58,6 +75,22 @@ export const getSeatAvailability = async (
 // -----------------------------------
 // BOOKINGS
 // -----------------------------------
+
+/**
+ * Fetch current user's bookings.
+ * GET /bookings/me
+ */
+export const getMyBookings = async (params: {
+    page: number;
+    page_size: number;
+    status?: string;
+    date?: string;
+}): Promise<PaginatedMyBookings> => {
+    const { data } = await api.get<PaginatedMyBookings>("/bookings/me", {
+        params,
+    });
+    return data;
+};
 
 /**
  * Create a new seat booking.
