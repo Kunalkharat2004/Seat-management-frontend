@@ -49,7 +49,7 @@ const BookSeatPage = () => {
     const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
     const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
 
-    const [snackbar, setSnackbar]         = useState<{
+    const [snackbar, setSnackbar] = useState<{
         open: boolean;
         message: string;
         severity: "success" | "error";
@@ -88,13 +88,8 @@ const BookSeatPage = () => {
                 },
                 onError: (err: unknown) => {
                     const typedErr = err as { response?: { status?: number; data?: { detail?: string } } };
-                    const status = typedErr.response?.status;
-                    let msg = typedErr.response?.data?.detail ?? "Failed to book seat. Please try again.";
-                    
-                    if (status === 409) {
-                        msg = "Seat already booked by another user.";
-                    }
-                    
+                    const msg = typedErr.response?.data?.detail ?? "Failed to book seat. Please try again.";
+
                     setSnackbar({ open: true, message: msg, severity: "error" });
                 },
             },
@@ -153,9 +148,9 @@ const BookSeatPage = () => {
             finalBookingId = myBooking.id;
         }
 
-        const seatIsPendingAction = 
-            bookMutation.isPending || 
-            (cancelMutation.isPending && bookingToCancel === finalBookingId) || 
+        const seatIsPendingAction =
+            bookMutation.isPending ||
+            (cancelMutation.isPending && bookingToCancel === finalBookingId) ||
             checkInMutation.isPending;
 
         return {
