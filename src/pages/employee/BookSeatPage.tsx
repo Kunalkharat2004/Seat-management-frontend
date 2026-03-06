@@ -49,6 +49,10 @@ const BookSeatPage = () => {
     const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
     const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
 
+    // ── Booking confirmation dialog state ─────────────────────────────────────
+    const [bookConfirmOpen, setBookConfirmOpen] = useState(false);
+    const [seatToBook, setSeatToBook] = useState<{ seatId: string; seatNumber: string } | null>(null);
+
     const [snackbar, setSnackbar] = useState<{
         open: boolean;
         message: string;
@@ -77,20 +81,60 @@ const BookSeatPage = () => {
     const cancelMutation = useCancelBooking();
     const checkInMutation = useCheckInBooking();
 
+    // ── Derived seat list (needed by handlers below) ──────────────────────────
+    const mappedSeats = (seats || []).map((seat) => {
+        const myBooking = myBookingsData?.items?.find((b) => b.seat_id === seat.seat_id);
+
+        let finalStatus = seat.status === "confirmed" ? "booked" : seat.status;
+        let finalBookingId = undefined;
+
+        if (myBooking) {
+            if (myBooking.status === "confirmed") finalStatus = "mine";
+            else if (myBooking.status === "checked_in") finalStatus = "checked_in";
+            // expired logic usually handled server-side, mapped to original status
+            finalBookingId = myBooking.id;
+        }
+
+        const seatIsPendingAction =
+            bookMutation.isPending ||
+            (cancelMutation.isPending && bookingToCancel === finalBookingId) ||
+            checkInMutation.isPending;
+
+        return {
+            seatId: seat.seat_id,
+            seatNumber: seat.seat_number,
+            status: finalStatus as "available" | "booked" | "mine" | "checked_in" | "expired",
+            bookingId: finalBookingId,
+            isPendingAction: seatIsPendingAction,
+        };
+    });
+
     // ── Handlers ─────────────────────────────────────────────────────────────
+    // Opens confirmation dialog instead of booking immediately
     const handleBook = (seatId: string) => {
         if (!dateQueryStr) return;
+        const seatInfo = mappedSeats.find((s) => s.seatId === seatId);
+        setSeatToBook({ seatId, seatNumber: seatInfo?.seatNumber ?? seatId });
+        setBookConfirmOpen(true);
+    };
+
+    // Called when employee clicks "Book Seat" inside the confirmation dialog
+    const confirmBook = () => {
+        if (!seatToBook || !dateQueryStr) return;
         bookMutation.mutate(
-            { seat_id: seatId, booking_date: dateQueryStr },
+            { seat_id: seatToBook.seatId, booking_date: dateQueryStr },
             {
                 onSuccess: () => {
                     setSnackbar({ open: true, message: "Seat booked successfully! 🎉", severity: "success" });
+                    setBookConfirmOpen(false);
+                    setSeatToBook(null);
                 },
                 onError: (err: unknown) => {
                     const typedErr = err as { response?: { status?: number; data?: { detail?: string } } };
                     const msg = typedErr.response?.data?.detail ?? "Failed to book seat. Please try again.";
-
                     setSnackbar({ open: true, message: msg, severity: "error" });
+                    setBookConfirmOpen(false);
+                    setSeatToBook(null);
                 },
             },
         );
@@ -134,41 +178,12 @@ const BookSeatPage = () => {
 
     const closeSnackbar = () => setSnackbar((p) => ({ ...p, open: false }));
 
-    // Derive mapped mappedSeats with generic "mine" identification
-    const mappedSeats = (seats || []).map((seat) => {
-        const myBooking = myBookingsData?.items?.find((b) => b.seat_id === seat.seat_id);
-
-        let finalStatus = seat.status === "confirmed" ? "booked" : seat.status;
-        let finalBookingId = undefined;
-
-        if (myBooking) {
-            if (myBooking.status === "confirmed") finalStatus = "mine";
-            else if (myBooking.status === "checked_in") finalStatus = "checked_in";
-            // expired logic usually handled server-side, mapped to original status
-            finalBookingId = myBooking.id;
-        }
-
-        const seatIsPendingAction =
-            bookMutation.isPending ||
-            (cancelMutation.isPending && bookingToCancel === finalBookingId) ||
-            checkInMutation.isPending;
-
-        return {
-            seatId: seat.seat_id,
-            seatNumber: seat.seat_number,
-            status: finalStatus as "available" | "booked" | "mine" | "checked_in" | "expired",
-            bookingId: finalBookingId,
-            isPendingAction: seatIsPendingAction,
-        };
-    });
-
+    // ─────────────────────────────────────────────────────────────────────────
     const isToday = dateQueryStr === today.format("YYYY-MM-DD");
     const anyMutationPending = bookMutation.isPending || cancelMutation.isPending || checkInMutation.isPending;
 
     const availableCount = seats?.filter((s) => s.status === "available").length || 0;
     const bookedCount = (seats?.length || 0) - availableCount;
-
-    // ─────────────────────────────────────────────────────────────────────────
 
     return (
         <Box>
@@ -349,6 +364,38 @@ const BookSeatPage = () => {
                     </Button>
                     <Button onClick={confirmCancel} color="error" variant="contained" disableElevation disabled={cancelMutation.isPending}>
                         {cancelMutation.isPending ? "Cancelling..." : "Yes, Cancel"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* ── Book Confirmation Dialog ───────────────────────────────── */}
+            <Dialog
+                open={bookConfirmOpen}
+                onClose={() => !bookMutation.isPending && (setBookConfirmOpen(false), setSeatToBook(null))}
+            >
+                <DialogTitle>Confirm Booking</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Book <strong>Seat {seatToBook?.seatNumber}</strong> for{" "}
+                        <strong>{selectedDate?.format("dddd, MMMM D, YYYY")}</strong>?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => { setBookConfirmOpen(false); setSeatToBook(null); }}
+                        disabled={bookMutation.isPending}
+                        color="inherit"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={confirmBook}
+                        color="primary"
+                        variant="contained"
+                        disableElevation
+                        disabled={bookMutation.isPending}
+                    >
+                        {bookMutation.isPending ? "Booking..." : "Book Seat"}
                     </Button>
                 </DialogActions>
             </Dialog>
