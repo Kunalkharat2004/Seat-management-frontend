@@ -29,7 +29,7 @@ import { useLogout } from "../hooks/useAuth";
 const DRAWER_WIDTH = 260;
 
 const NAV_ITEMS = [
-    { label: "Dashboard",   icon: <DashboardIcon />,  path: "/employee/dashboard" },
+    { label: "Dashboard",   icon: <DashboardIcon />,   path: "/employee/dashboard" },
     { label: "Book a Seat", icon: <EventSeatIcon />,   path: "/employee/book-seat" },
     { label: "My Bookings", icon: <BookOnlineIcon />,  path: "/employee/bookings"  },
 ] as const;

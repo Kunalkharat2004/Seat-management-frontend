@@ -5,6 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import AppRoutes from "./routes/AppRoutes";
+import ScrollToTop from "./components/ScrollToTop";
 import { useAuthStore } from "./store/auth.store";
 import { useCurrentUser } from "./hooks/useAuth";
 
@@ -50,6 +51,7 @@ const App = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <BrowserRouter>
+        <ScrollToTop />
         <AppRoutes />
       </BrowserRouter>
     </LocalizationProvider>

@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
 import SetPasswordPage from "../pages/auth/SetPasswordPage";
+import DepartmentPortalPage from "../pages/DepartmentPortalPage";
 import AdminLayout from "../layouts/AdminLayout";
 import EmployeeLayout from "../layouts/EmployeeLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -35,6 +36,16 @@ const AppRoutes = () => {
                 <Route path="seats" element={<SeatsPage />} />
             </Route>
 
+            {/* ── Employee Portal (protected, standalone — no sidebar) ──── */}
+            <Route
+                path="/employee/portal"
+                element={
+                    <RequireAuth allowedRoles={["employee"]}>
+                        <DepartmentPortalPage />
+                    </RequireAuth>
+                }
+            />
+
             {/* ── Employee (protected) ────────────────────────────────────── */}
             <Route
                 path="/employee"
@@ -44,7 +55,7 @@ const AppRoutes = () => {
                     </RequireAuth>
                 }
             >
-                <Route index element={<Navigate to="dashboard" replace />} />
+                <Route index element={<Navigate to="portal" replace />} />
                 <Route path="dashboard" element={<EmployeeDashboard />} />
                 <Route path="book-seat" element={<BookSeatPage />} />
                 <Route path="bookings" element={<MyBookings />} />

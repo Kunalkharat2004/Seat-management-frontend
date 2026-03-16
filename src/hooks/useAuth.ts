@@ -74,7 +74,7 @@ export const useLoginMutation = () => {
             if (loginRes.role === "admin") {
                 navigate("/admin/dashboard", { replace: true });
             } else {
-                navigate("/employee/dashboard", { replace: true });
+                navigate("/employee/portal", { replace: true });
             }
         },
     });
