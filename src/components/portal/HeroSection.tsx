@@ -1,135 +1,101 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, AppBar, Toolbar, Button, Stack } from "@mui/material";
 
-import heroIllustration from "../../assets/hero_illustration.png";
+import heroImage from "../../assets/image.png";
+import department_logo from "../../assets/SF_logo.png";
+
+// ─── Navigation Links ────────────────────────────────────────────────────────
+
+const NAV_LINKS = ["Home", "Who are we?", "HR Policies & SPOCs"] as const;
 
 // ─── Hero Section ────────────────────────────────────────────────────────────
 
 const HeroSection: React.FC = () => (
-    <Box
-        sx={{
-            background: "linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%)",
-            color: "#fff",
-            position: "relative",
-            overflow: "hidden",
-            minHeight: { xs: 320, md: 380 },
-            display: "flex",
-            alignItems: "center",
-        }}
-    >
-        {/* Subtle grid overlay */}
-        <Box
+    <Box>
+        {/* ── Navbar ──────────────────────────────────────────────────── */}
+        <AppBar
+            position="static"
+            elevation={0}
             sx={{
-                position: "absolute",
-                inset: 0,
-                backgroundImage:
-                    "linear-gradient(rgba(25,118,210,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(25,118,210,0.03) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-                pointerEvents: "none",
-            }}
-        />
-
-        <Box
-            className="flex flex-col md:flex-row items-center"
-            sx={{
-                width: "100%",
-                maxWidth: 1200,
-                mx: "auto",
-                px: { xs: 3, md: 6 },
-                py: { xs: 4, md: 5 },
-                position: "relative",
-                zIndex: 1,
-                gap: { xs: 4, md: 0 },
+                bgcolor: "background.paper",
+                color: "text.primary",
+                borderBottom: "1px solid",
+                borderColor: "divider",
             }}
         >
-            {/* Left side — Logo + Tagline */}
-            <Box sx={{ flex: 1 }}>
-                {/* Logo / Brand */}
-                <Box className="flex items-center gap-3" sx={{ mb: 3 }}>
+            <Toolbar
+                sx={{
+                    maxWidth: 1200,
+                    width: "100%",
+                    mx: "auto",
+                    px: { xs: 2, md: 4 },
+                    justifyContent: "space-between",
+                }}
+            >
+                {/* Left — Department Logo */}
+                <Stack direction="row" alignItems="center" spacing={1.5}>
                     <Box
+                        component="img"
+                        src={department_logo}
+                        alt="Department Logo"
                         sx={{
-                            width: 48,
-                            height: 48,
-                            borderRadius: "50%",
-                            border: "2px solid rgba(25,118,210,0.6)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: "rgba(25,118,210,0.1)",
+                            width: 50,
+                            height: 50,
+                            borderRadius: "10%",
                         }}
-                    >
-                        <Typography
-                            variant="subtitle1"
-                            fontWeight={800}
-                            sx={{ color: "#fff", letterSpacing: 1 }}
-                        >
-                            BTI
-                        </Typography>
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        fontWeight={700}
-                        sx={{ letterSpacing: 0.5 }}
-                    >
-                        Department Portal
+                    />
+                    <Typography variant="h6" fontWeight={700} noWrap>
+                        Software Factory
                     </Typography>
-                </Box>
+                </Stack>
 
-                {/* Code-style tagline */}
-                <Box
-                    component="pre"
-                    sx={{
-                        fontFamily: "'Roboto Mono', 'Consolas', monospace",
-                        fontSize: { xs: "0.85rem", md: "1rem" },
-                        lineHeight: 1.8,
-                        color: "rgba(255,255,255,0.85)",
-                        m: 0,
-                        p: 0,
-                        background: "none",
-                        border: "none",
-                    }}
-                >
-                    <Box component="span" sx={{ color: "#58a6ff" }}>
-                        {"<engine>"}
-                    </Box>
-                    {"\n"}
-                    {"  status = "}
-                    <Box component="span" sx={{ color: "#fff", fontWeight: 700 }}>
-                        {'"Built in Code"'}
-                    </Box>
-                    {";"}
-                    {"\n"}
-                    {"  motion = "}
-                    <Box component="span" sx={{ color: "#fff", fontWeight: 700 }}>
-                        {'"Driven in Style"'}
-                    </Box>
-                    {";"}
-                    {"\n"}
-                    <Box component="span" sx={{ color: "#58a6ff" }}>
-                        {"</engine>"}
-                    </Box>
-                </Box>
-            </Box>
+                {/* Right — Navigation Links */}
+                <Stack direction="row" spacing={0.5}>
+                    {NAV_LINKS.map((label, idx) => (
+                        <Button
+                            key={label}
+                            size="small"
+                            sx={{
+                                textTransform: "none",
+                                fontWeight: idx === 0 ? 700 : 500,
+                                color: idx === 0 ? "text.primary" : "text.secondary",
+                                fontSize: "0.875rem",
+                                px: 1.5,
+                                "&:hover": {
+                                    bgcolor: "action.hover",
+                                },
+                            }}
+                        >
+                            {label}
+                        </Button>
+                    ))}
+                </Stack>
+            </Toolbar>
+        </AppBar>
 
-            {/* Right side — Illustration */}
+        {/* ── Hero Image Banner ───────────────────────────────────────── */}
+        <Box
+            sx={{
+                bgcolor: "#f5f6f8",
+                px: { xs: 2, md: 4 },
+                pt: { xs: 2, md: 3 },
+            }}
+        >
             <Box
                 sx={{
-                    flex: 1,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    maxWidth: 1200,
+                    mx: "auto",
                 }}
             >
                 <Box
                     component="img"
-                    src={heroIllustration}
-                    alt="Technology and innovation illustration"
+                    src={heroImage}
+                    alt="Department Portal Hero Banner"
                     sx={{
-                        maxWidth: { xs: 280, md: 420 },
                         width: "100%",
                         height: "auto",
+                        display: "block",
                         borderRadius: 2,
-                        opacity: 0.9,
                     }}
                 />
             </Box>

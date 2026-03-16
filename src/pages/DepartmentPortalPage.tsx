@@ -7,6 +7,8 @@ import NewsCard from "../components/portal/NewsCard";
 import ApplicationCard from "../components/portal/ApplicationCard";
 import { NEWS_ITEMS, APP_ITEMS } from "../components/portal/portalData";
 
+import ourLeadershipImage from "../assets/our_leadership_2.png";
+
 // ─── Page Component ──────────────────────────────────────────────────────────
 
 const DepartmentPortalPage: React.FC = () => {
@@ -107,7 +109,7 @@ const DepartmentPortalPage: React.FC = () => {
                                     {APP_ITEMS.map((item) => (
                                         <Grid
                                             key={item.id}
-                                            size={{ xs: 12, sm: 6 }}
+                                            size={{ xs: 12 }}
                                         >
                                             <ApplicationCard item={item} onNavigate={navigate} />
                                         </Grid>
@@ -117,6 +119,52 @@ const DepartmentPortalPage: React.FC = () => {
                         </Paper>
                     </Grid>
                 </Grid>
+
+                {/* ── Our Leadership Section ───────────────────────────── */}
+                <Paper
+                    elevation={0}
+                    sx={{
+                        mt: 4,
+                        borderRadius: 3,
+                        border: "1px solid",
+                        borderColor: "divider",
+                        bgcolor: "background.paper",
+                        overflow: "hidden",
+                    }}
+                >
+                    <Box
+                        sx={{
+                            px: 3,
+                            py: 2,
+                            borderBottom: "1px solid",
+                            borderColor: "divider",
+                        }}
+                    >
+                        <Typography
+                            variant="h6"
+                            fontWeight={700}
+                            color="text.primary"
+                        >
+                            Our Leadership
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Meet the leaders driving our vision forward
+                        </Typography>
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <Box
+                            component="img"
+                            src={ourLeadershipImage}
+                            alt="Our Leadership"
+                            sx={{
+                                width: "100%",
+                                height: "auto",
+                                display: "block",
+                                borderRadius: 2,
+                            }}
+                        />
+                    </Box>
+                </Paper>
             </Box>
         </Box>
     );
