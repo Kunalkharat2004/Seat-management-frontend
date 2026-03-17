@@ -7,10 +7,12 @@ import {
     login as loginApi,
     getCurrentUser,
     setPassword as setPasswordApi,
+    forgotPassword as forgotPasswordApi,
     type LoginCredentials,
     type LoginResponse,
     type CurrentUserResponse,
     type SetPasswordPayload,
+    type ForgotPasswordPayload,
 } from "../api/auth.api";
 import { useAuthStore } from "../store/auth.store";
 
@@ -85,6 +87,14 @@ export const useLoginMutation = () => {
 export const useSetPasswordMutation = () => {
     return useMutation<{ message: string }, AxiosError, SetPasswordPayload>({
         mutationFn: setPasswordApi,
+    });
+};
+
+// ─── useForgotPasswordMutation ───────────────────────────────────────────────
+
+export const useForgotPasswordMutation = () => {
+    return useMutation<{ message: string }, AxiosError, ForgotPasswordPayload>({
+        mutationFn: forgotPasswordApi,
     });
 };
 

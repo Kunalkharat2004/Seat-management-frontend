@@ -62,3 +62,21 @@ export const setPassword = async (
     );
     return data;
 };
+
+export interface ForgotPasswordPayload {
+    email: string;
+}
+
+/**
+ * Request a password-reset email.
+ * POST /auth/forgot-password
+ */
+export const forgotPassword = async (
+    payload: ForgotPasswordPayload,
+): Promise<{ message: string }> => {
+    const { data } = await api.post<{ message: string }>(
+        "/auth/forgot-password",
+        payload,
+    );
+    return data;
+};

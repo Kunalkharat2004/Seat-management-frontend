@@ -6,9 +6,14 @@ import {
     Card,
     CardContent,
     CircularProgress,
+    Link,
     TextField,
     Typography,
+    IconButton,
+    InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AxiosError } from "axios";
 
@@ -36,6 +41,7 @@ const getErrorMessage = (error: Error | null): string => {
 const LoginPage = () => {
     const [employeeId, setEmployeeId] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const loginMutation = useLoginMutation();
 
@@ -112,14 +118,42 @@ const LoginPage = () => {
                         <TextField
                             id="password"
                             label="Password"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             fullWidth
                             autoComplete="current-password"
                             disabled={loginMutation.isPending}
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                onMouseDown={(e) => e.preventDefault()}
+                                                edge="end"
+                                                aria-label="toggle password visibility"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
                         />
+
+                        <Box className="flex justify-end">
+                            <Link
+                                component={RouterLink}
+                                to="/forgot-password"
+                                variant="body2"
+                                underline="hover"
+                                sx={{ fontWeight: 500 }}
+                            >
+                                Forgot Password?
+                            </Link>
+                        </Box>
 
                         <Button
                             id="login-submit"

@@ -46,7 +46,8 @@ const SetPasswordPage = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [success, setSuccess] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const setPasswordMutation = useSetPasswordMutation();
     const loading = setPasswordMutation.isPending;
@@ -141,7 +142,7 @@ const SetPasswordPage = () => {
                             <TextField
                                 id="new-password"
                                 label="New Password"
-                                type={showPassword ? "text" : "password"}
+                                type={showNewPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -156,11 +157,11 @@ const SetPasswordPage = () => {
                                         endAdornment: (
                                             <InputAdornment position="end">
                                                 <IconButton
-                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    onClick={() => setShowNewPassword(!showNewPassword)}
                                                     edge="end"
                                                     aria-label="toggle password visibility"
                                                 >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    {showNewPassword ? <VisibilityOff /> : <Visibility />}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
@@ -171,7 +172,7 @@ const SetPasswordPage = () => {
                             <TextField
                                 id="confirm-password"
                                 label="Confirm Password"
-                                type={showPassword ? "text" : "password"}
+                                type={showConfirmPassword ? "text" : "password"}
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
@@ -180,6 +181,21 @@ const SetPasswordPage = () => {
                                 error={isPasswordMismatch}
                                 helperText={isPasswordMismatch ? "Passwords do not match" : ""}
                                 disabled={loading}
+                                slotProps={{
+                                    input: {
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                                    edge="end"
+                                                    aria-label="toggle confirm password visibility"
+                                                >
+                                                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    },
+                                }}
                             />
 
                             <Button

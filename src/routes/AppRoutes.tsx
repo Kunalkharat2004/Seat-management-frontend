@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import LoginPage from "../pages/auth/LoginPage";
 import SetPasswordPage from "../pages/auth/SetPasswordPage";
+import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import DepartmentPortalPage from "../pages/DepartmentPortalPage";
 import AdminLayout from "../layouts/AdminLayout";
 import EmployeeLayout from "../layouts/EmployeeLayout";
@@ -20,6 +21,7 @@ const AppRoutes = () => {
         <Routes>
             {/* ── Public ──────────────────────────────────────────────────── */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/set-password" element={<SetPasswordPage />} />
 
             {/* ── Admin (protected) ───────────────────────────────────────── */}
