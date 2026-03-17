@@ -6,7 +6,10 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
 import GroupsIcon from "@mui/icons-material/Groups";
-import CelebrationIcon from "@mui/icons-material/Celebration";
+import itconnect from "../../assets/features/itconnectnewone.webp"
+import benefitsyou from "../../assets/features/BFYLogo.webp"
+import peoplestrong from "../../assets/features/PS-Logo.webp"
+import coursera from "../../assets/features/coursera.webp"
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -58,15 +61,15 @@ export const NEWS_ITEMS: NewsItem[] = [
         icon: <GroupsIcon />,
         tag: "Update",
     },
-    {
-        id: 4,
-        title: "Annual Sports Day — Save the Date!",
-        description:
-            "Mark your calendars for the annual corporate sports day event. Registration opens next week.",
-        date: "01 Mar 2026",
-        icon: <CelebrationIcon />,
-        tag: "Event",
-    },
+    // {
+    //     id: 4,
+    //     title: "Annual Sports Day — Save the Date!",
+    //     description:
+    //         "Mark your calendars for the annual corporate sports day event. Registration opens next week.",
+    //     date: "01 Mar 2026",
+    //     icon: <CelebrationIcon />,
+    //     tag: "Event",
+    // },
 ];
 
 export const APP_ITEMS: AppItem[] = [
@@ -99,6 +102,34 @@ export const APP_ITEMS: AppItem[] = [
         icon: <EventNoteIcon sx={{ fontSize: 32 }} />,
         color: "#9c27b0",
     },
+    {
+        id: 5,
+        name: "ITConnect - IT Support System",
+        description: "Raise tickets for IT related issues.",
+        icon: <img src={itconnect} alt="ITConnect" style={{ width: "100%", height: "100%" }} />,
+        color: "#9c27b0",
+    },
+    {
+        id: 6,
+        name: "PeopleStrong - BTI's HRMS System",
+        description: "Manage your HR-related tasks and information.",
+        icon: <img src={peoplestrong} alt="PeopleStrong" style={{ width: "100%", height: "100%" }} />,
+        color: "#9c27b0",
+    },
+    {
+        id: 7,
+        name: "Benefits You - Employee Insurance",
+        description: "Manage your employee insurance benefits.",
+        icon: <img src={benefitsyou} alt="BenefitsYou" style={{ width: "100%", height: "100%" }} />,
+        color: "#9c27b0",
+    },
+    {
+        id: 8,
+        name: "Coursera - BTI Learning Management",
+        description: "Access training programs and learning resources.",
+        icon: <img src={coursera} alt="Coursera" style={{ width: "100%", height: "100%" }} />,
+        color: "#9c27b0",
+    }
 ];
 
 export const TAG_COLORS: Record<string, "primary" | "success" | "info" | "secondary"> = {

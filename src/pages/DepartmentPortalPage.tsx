@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Box, Typography, Grid, Paper, Stack } from "@mui/material";
 
 import HeroSection from "../components/portal/HeroSection";
+import AboutSection from "../components/portal/AboutSection";
 import NewsCard from "../components/portal/NewsCard";
 import ApplicationCard from "../components/portal/ApplicationCard";
 import { NEWS_ITEMS, APP_ITEMS } from "../components/portal/portalData";
 
-import ourLeadershipImage from "../assets/our_leadership_2.png";
+import ourLeadershipImage from "../assets/our_leadership.png";
 
 // ─── Page Component ──────────────────────────────────────────────────────────
 
@@ -19,62 +20,113 @@ const DepartmentPortalPage: React.FC = () => {
             {/* ── Hero Section ────────────────────────────────────────────── */}
             <HeroSection />
 
+            {/* ── About Section ─────────────────────────────────────── */}
+            <AboutSection />
+
             {/* ── Main Content ────────────────────────────────────────────── */}
             <Box
                 sx={{
                     maxWidth: 1200,
                     mx: "auto",
-                    px: { xs: 2, md: 4 },
+                    px: { xs: 2, md: 1 },
                     py: { xs: 3, md: 5 },
                 }}
             >
                 <Grid container spacing={4}>
-                    {/* ── News Section (Left) ─────────────────────────────── */}
-                    <Grid size={{ xs: 12, md: 7 }}>
-                        <Paper
-                            elevation={0}
-                            sx={{
-                                borderRadius: 3,
-                                border: "1px solid",
-                                borderColor: "divider",
-                                bgcolor: "background.paper",
-                                overflow: "hidden",
-                            }}
-                        >
-                            <Box
+                    {/* ── News + Leadership (Left Column) ────────────────── */}
+                    <Grid size={{ xs: 12, md: 8 }}>
+                        <Stack spacing={4}>
+                            {/* Latest News */}
+                            <Paper
+                                elevation={0}
                                 sx={{
-                                    px: 3,
-                                    py: 2,
-                                    borderBottom: "1px solid",
+                                    borderRadius: 3,
+                                    border: "1px solid",
                                     borderColor: "divider",
+                                    bgcolor: "background.paper",
+                                    overflow: "hidden",
                                 }}
                             >
-                                <Typography
-                                    variant="h6"
-                                    fontWeight={700}
-                                    color="text.primary"
+                                <Box
+                                    sx={{
+                                        px: 3,
+                                        py: 2,
+                                        borderBottom: "1px solid",
+                                        borderColor: "divider",
+                                    }}
                                 >
-                                    Latest News
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Stay updated with company announcements
-                                </Typography>
-                            </Box>
-                            <Stack spacing={0} sx={{ p: 2 }}>
-                                {NEWS_ITEMS.map((item, idx) => (
-                                    <React.Fragment key={item.id}>
-                                        <NewsCard item={item} />
-                                        {idx < NEWS_ITEMS.length - 1 && (
-                                            <Box sx={{ height: 12 }} />
-                                        )}
-                                    </React.Fragment>
-                                ))}
-                            </Stack>
-                        </Paper>
+                                    <Typography
+                                        variant="h6"
+                                        fontWeight={700}
+                                        color="text.primary"
+                                    >
+                                        Latest News
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Stay updated with company announcements
+                                    </Typography>
+                                </Box>
+                                <Stack spacing={0} sx={{ p: 2 }}>
+                                    {NEWS_ITEMS.map((item, idx) => (
+                                        <React.Fragment key={item.id}>
+                                            <NewsCard item={item} />
+                                            {idx < NEWS_ITEMS.length - 1 && (
+                                                <Box sx={{ height: 12 }} />
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </Stack>
+                            </Paper>
+
+                            {/* Our Leadership */}
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    borderRadius: 3,
+                                    border: "1px solid",
+                                    borderColor: "divider",
+                                    bgcolor: "background.paper",
+                                    overflow: "hidden",
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        px: 3,
+                                        py: 2,
+                                        borderBottom: "1px solid",
+                                        borderColor: "divider",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        fontWeight={700}
+                                        color="text.primary"
+                                    >
+                                        Our Leadership
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Meet the leaders driving our vision forward
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ p: 2 }}>
+                                    <Box
+                                        component="img"
+                                        src={ourLeadershipImage}
+                                        alt="Our Leadership"
+                                        sx={{
+                                            width: "100%",
+                                            height: "auto",
+                                            display: "block",
+                                            borderRadius: 2,
+                                        }}
+                                    />
+                                </Box>
+                            </Paper>
+                        </Stack>
                     </Grid>
 
                     {/* ── Applications Section (Right) ────────────────────── */}
-                    <Grid size={{ xs: 12, md: 5 }}>
+                    <Grid size={{ xs: 12, md: 4 }}>
                         <Paper
                             elevation={0}
                             sx={{
@@ -119,52 +171,6 @@ const DepartmentPortalPage: React.FC = () => {
                         </Paper>
                     </Grid>
                 </Grid>
-
-                {/* ── Our Leadership Section ───────────────────────────── */}
-                <Paper
-                    elevation={0}
-                    sx={{
-                        mt: 4,
-                        borderRadius: 3,
-                        border: "1px solid",
-                        borderColor: "divider",
-                        bgcolor: "background.paper",
-                        overflow: "hidden",
-                    }}
-                >
-                    <Box
-                        sx={{
-                            px: 3,
-                            py: 2,
-                            borderBottom: "1px solid",
-                            borderColor: "divider",
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            fontWeight={700}
-                            color="text.primary"
-                        >
-                            Our Leadership
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Meet the leaders driving our vision forward
-                        </Typography>
-                    </Box>
-                    <Box sx={{ p: 2 }}>
-                        <Box
-                            component="img"
-                            src={ourLeadershipImage}
-                            alt="Our Leadership"
-                            sx={{
-                                width: "100%",
-                                height: "auto",
-                                display: "block",
-                                borderRadius: 2,
-                            }}
-                        />
-                    </Box>
-                </Paper>
             </Box>
         </Box>
     );
